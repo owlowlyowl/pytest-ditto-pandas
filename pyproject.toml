@@ -52,6 +52,7 @@ build-backend = "hatchling.build"
 
 
 [tool.hatch.build]
+include = ["src"]
 hooks.vcs.version-file = "src/ditto/_version.py"
 hooks.vcs.template = "__version__ = {version!r}"
 targets.wheel.packages = ["src/ditto"]
