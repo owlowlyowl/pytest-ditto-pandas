@@ -2,6 +2,7 @@
 [![PyPI version](https://badge.fury.io/py/pytest-ditto-pandas.svg)](https://badge.fury.io/py/pytest-ditto-pandas)
 [![Continuous Integration](https://github.com/owlowlyowl/pytest-ditto-pandas/actions/workflows/ci.yml/badge.svg)](https://github.com/owlowlyowl/pytest-ditto-pandas/actions/workflows/ci.yml)
 
+`pytest-ditto` plugin for pandas snapshots.
 
 ## @ditto Marks
 If the default persistence format, `pickle`, isn't appropriate different formats can be
