@@ -1,0 +1,13 @@
+.ditto
+
+.pytest_cache
+__pycache__
+*.egg-info
+
+venv*
+
+.idea/
+.vscode/
+
+dist/
+archive/

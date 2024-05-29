@@ -1,0 +1,170 @@
+[project]
+name = "pytest-ditto-pandas"
+dynamic = [
+    "version",
+]
+description = "pytest-ditto plugin for pandas snapshots."
+keywords = ["pytest" , "testing"]
+authors = [{ name = "Lachlan Taylor", email = "lachlanbtaylor@proton.me" }]
+maintainers = [{ name = "Lachlan Taylor", email = "lachlanbtaylor@proton.me" }]
+requires-python = ">=3.10"
+license = "MIT"
+readme = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Testing",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pytest>=3.5.0",
+    "pytest-ditto",
+    "pandas",
+    "pyarrow",
+]
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "hatch>=1.9.4",
+    "hatch-vcs>=0.4.0",
+]
+
+[project.entry-points.ditto]
+pandas_parquet = "ditto_pandas.io:PandasParquet"
+pandas_json = "ditto_pandas.io:PandasJson"
+pandas_csv = "ditto_pandas.io:PandasCsv"
+
+[project.entry-points.ditto_marks]
+pandas = "ditto_pandas.marks:marks"
+
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+
+[tool.hatch.build]
+hooks.vcs.version-file = "src/ditto/_version.py"
+hooks.vcs.template = "__version__ = {version!r}"
+targets.wheel.packages = ["src/ditto"]
+targets.wheel.strict-naming = false
+targets.sdist.packages = ["src/ditto"]
+targets.sdist.strict-naming = false
+
+[tool.hatch.version]
+source = "code"
+path = "version_builder.py"
+expression = "_version()"
+
+
+[tool.hatch.envs.default]
+python = "3.10"
+dependencies = [
+  "pytest",
+]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests/ci}"
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.10", "3.11", "3.12"]
+
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+filterwarnings = [
+    # "error",
+    "ignore::UserWarning",
+    # note the use of single quote below to denote "raw" strings in TOML
+    'ignore::DeprecationWarning',
+]
+
+
+[tool.black]
+line-length = 88
+target-version = ['py310', 'py311', 'py312']
+exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/(
+  (
+      \.eggs
+    | \.git
+    | \.pytest_cache
+    | \.vscode
+    | \.mypy_cache
+    | __pycache__
+    | _cache
+    | app_data
+    | logs
+    | venv
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.coverage.run]
+branch = true
+source = ["src/ditto"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+
+[tool.ruff]
+line-length = 88  # same as Black.
+target-version = "py310"
+
+[tool.ruff.lint]
+# Enable the following rule sets:
+# pycodestyle (`E`) https://docs.astral.sh/ruff/rules/#pyflakes-f
+# Pyflakes (`F`) https://docs.astral.sh/ruff/rules/#pyflakes-f
+# flake8-bugbear (B) https://docs.astral.sh/ruff/rules/#flake8-bugbear-b
+# flake8-simplify (SIM) https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+# flake8-quotes (Q) https://docs.astral.sh/ruff/rules/#flake8-quotes-q
+select = ["E", "F", "C90", "B", "SIM"]
+extend-select = ["Q"]
+ignore = []
+# F401 - imported but unused
+# F841 - local variable assigned but never used
+# SIM300 - Yoda conditions are discouraged
+extend-ignore = ["F401", "F841", "SIM300"]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+mccabe.max-complexity = 5
