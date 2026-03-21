@@ -5,8 +5,8 @@
 `pytest-ditto` plugin for pandas snapshots.
 
 ## @ditto Marks
-If the default persistence format, `pickle`, isn't appropriate different formats can be
-specified per test by using `ditto` marks - customised `pytest` mark decorators.
+If the default recorder, `pickle`, isn't appropriate a different recorder can be
+specified per test using `ditto` marks — customised `pytest` mark decorators.
 
 
 ## Usage
