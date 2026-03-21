@@ -1,18 +1,14 @@
-name: Publish to PyPI
+name: Pre-release Testing
 
-on:
-  release:
-    types: [published]
+on: workflow_dispatch
 
 permissions:
   contents: read
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment: release
-    permissions:
-      id-token: write
+    environment: pre-release
 
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +24,3 @@ jobs:
 
       - name: Test package
         run: pixi run -e py312 test
-
-      - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1

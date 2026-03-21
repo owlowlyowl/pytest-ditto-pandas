@@ -1,6 +1,7 @@
 .ditto
 
 .pytest_cache
+.pytest
 __pycache__
 *.egg-info
 
