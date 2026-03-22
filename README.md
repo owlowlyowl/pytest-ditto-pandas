@@ -45,3 +45,20 @@ def test_fn_with_json_dataframe_snapshot(snapshot):
     result = awesome_fn_to_test(input_data)
     pd.testing.assert_frame_equal(result, snapshot(result, key="ab_dataframe"))
 ```
+
+### Format notes
+
+| Format | Index preserved | dtype preserved |
+|--------|----------------|-----------------|
+| parquet | yes | yes |
+| json | yes | yes |
+| csv | single-level numeric or string only (see below) | no |
+
+The CSV recorder does not preserve index type metadata. Supported index types
+for round-trip are single-level numeric (note: `RangeIndex` is read back as
+`Int64`) and string. `DatetimeIndex`, `PeriodIndex`, `CategoricalIndex`, and
+`MultiIndex` are not supported — use `@ditto.pandas.parquet` or
+`@ditto.pandas.json` for DataFrames with these index types.
+
+When comparing a CSV snapshot with `pd.testing.assert_frame_equal`, pass
+`check_index_type=False` to account for the `RangeIndex` → `Int64` conversion.

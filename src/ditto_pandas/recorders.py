@@ -36,7 +36,7 @@ def _csv_save(data: pd.DataFrame, filepath: Path) -> None:
 
 
 def _csv_load(filepath: Path) -> pd.DataFrame:
-    return pd.read_csv(filepath)
+    return pd.read_csv(filepath, index_col=0)
 
 
 pandas_csv: Recorder[pd.DataFrame] = Recorder(
