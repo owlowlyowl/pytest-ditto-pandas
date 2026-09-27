@@ -1182,11 +1182,11 @@ packages:
 - pypi: ./
   name: pytest-ditto-pandas
   version: 0.0.1
-  sha256: 50e7a57f79ffe9c268de241ca02db3ebdb92a12400414d6990ee802662900e4a
+  sha256: 5b2e14c6169c72be55b28b5abd75053db4aaeb3a3095d1be12523e01e6f32d35
   requires_dist:
   - pandas
   - pyarrow
-  - pytest-ditto>=1.0.1
+  - pytest-ditto>=1.0.1,<2
   - pytest>=3.5.0
   requires_python: '>=3.12'
 - conda: https://conda.anaconda.org/conda-forge/linux-64/python-3.12.13-hd63d673_0_cpython.conda
